@@ -37,6 +37,7 @@ router.post("/signup", (req, res) => {
           result: true,
           token: newDoc.token,
           username: newDoc.username,
+          birthDate: newDoc.birthDate,
         });
       });
     } else {
@@ -54,7 +55,12 @@ router.post("/signin", (req, res) => {
 
   User.findOne({ username: req.body.username }).then((data) => {
     if (data && bcrypt.compareSync(req.body.password, data.password)) {
-      res.json({ result: true, token: data.token, username: data.username });
+      res.json({
+        result: true,
+        token: data.token,
+        username: data.username,
+        birthDate: data.birthDate,
+      });
     } else {
       res.json({ result: false, error: "User not found or wrong password" });
     }
